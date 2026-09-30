@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+html,
+body {
+    @apply bg-white dark:bg-gray-950;
+    font-family: var(--font-sans);
+
+    @media (prefers-color-scheme: dark) {
+        color-scheme: dark;
+    }
+}
+
+html,
+body {
+    @apply bg-white dark:bg-gray-950;
+    font-family: var(--font-sans);
+
+    @media (prefers-color-scheme: dark) {
+        color-scheme: dark;
+    }
+}
+
+#sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 20%;
+    height: 100%;
+    padding-left: 20px;
+    /* Adjust as needed */
+    border-right: 1px solid #ccc;
+}
+
+#content {
+    margin-left: 20%;
+
+    padding: 20px;
+}
+
+.meeting-widget {
+    border: 1px solid #e2e8f0;
+    /* Tailwind's gray-200 */
+    border-radius: 0.5rem;
+    /* Tailwind's rounded-lg */
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.meeting-widget .meeting-info h3 {
+    font-size: 1.25rem;
+    /* Tailwind's text-xl */
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.meeting-widget .meeting-info p {
+    color: #4a5568;
+    /* Tailwind's gray-600 */
+}
+
+.meeting-widget a {
+    background-color: #3b82f6;
+    /* Tailwind's blue-500 */
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.meeting-widget a:hover {
+    background-color: #2563eb;
+    /* Tailwind's blue-600 */
+}
+
+@media (min-width: 768px) {
+    .meeting-widget {
+        flex-direction: row;
+    }
+
+    .meeting-widget .meeting-info {
+        text-align: left;
+        margin-bottom: 0;
+    }
+}
+
+a {
+    color: #3b82f6;
+}

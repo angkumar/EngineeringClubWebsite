@@ -1,0 +1,55 @@
+/* Styles for MDX content */
+
+.mdx-content h1 {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+  color: #333;
+}
+
+.mdx-content h2 {
+  font-size: 2em;
+  margin-bottom: 0.4em;
+  color: #444;
+}
+
+.mdx-content p {
+  margin-bottom: 1em;
+  line-height: 1.6;
+}
+
+.mdx-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em 0;
+}
+
+.mdx-content ul,
+.mdx-content ol {
+  margin-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+.mdx-content li {
+  margin-bottom: 0.5em;
+}
+
+.mdx-content a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.mdx-content pre {
+  background-color: #f4f4f4;
+  padding: 1em;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin-bottom: 1em;
+}
+
+.mdx-content code {
+  font-family: monospace;
+  background-color: #e9e9e9;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+}

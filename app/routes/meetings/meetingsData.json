@@ -1,0 +1,26 @@
+{
+    "upcomingMeetings": [
+        {
+            "date": "Tuesday, November 19, 2025",
+            "topic": "Project TT-02 progress review.",
+            "location": "Room 101"
+        },
+        {
+            "date": "Thursday, November 21, 2025",
+            "topic": "Introduction to Project Fly.",
+            "location": "Room 102"
+        }
+    ],
+    "pastMeetings": [
+        {
+            "date": "November 12, 2025",
+            "topic": "Brainstorming new project ideas",
+            "minutesLink": "#"
+        },
+        {
+            "date": "November 5, 2025",
+            "topic": "Introduction to the club and elections",
+            "minutesLink": "#"
+        }
+    ]
+}

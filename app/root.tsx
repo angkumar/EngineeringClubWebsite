@@ -46,19 +46,6 @@ import "./app.css";
 import "./mdx.css";
 import "./markdown.css";
 
-export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
-];
-
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -81,35 +68,32 @@ export default function App() {
   const { projectNames } = useLoaderData<LoaderData>();
 
   return (
-    <div className="flex h-screen">
-      <div id="sidebar" className="w-1/5 bg-gray-200 dark:bg-gray-800 p-4">
-        <h2 className="text-xl font-bold mb-4">Novi Engineering Club</h2>
-        <nav>
-          <ul>
-            <li className="mb-2"><Link to="/" className="text-blue-600 hover:underline">Home</Link></li>
-            {projectNames.map((projectName) => (
-              <li key={projectName} className="mb-2">
-                <Link to={`/projects/${projectName}`} className="text-blue-600 hover:underline">
-                  Project {projectName.charAt(0).toUpperCase() + projectName.slice(1)}
-                </Link>
-              </li>
-            ))}
-            <li className="mb-2"><Link to="/meetings" className="text-blue-600 hover:underline">Meetings</Link></li>
-            <li className="mb-2"><Link to="/admin" className="text-blue-600 hover:underline font-semibold">Admin Panel</Link></li>
-          </ul>
-          <div className="flex space-x-4 mt-4">
-            <a href="https://www.instagram.com/noviengineeringig/" target="_blank" rel="noopener noreferrer">
-              <FaInstagram className="text-gray-600 dark:text-gray-300 text-2xl hover:text-blue-500" />
-            </a>
-            <a href="https://groupme.com/join_group/104854219/05ltImUw" target="_blank" rel="noopener noreferrer">
-              <SiGroupme className="text-gray-600 dark:text-gray-300 text-2xl hover:text-blue-500" />
-            </a>
-          </div>
+    <div className="site-shell">
+      <header className="site-header">
+        <Link to="/" className="brand" aria-label="Novi Engineering Club home">
+          <span className="brand-mark">NE</span>
+          <span className="brand-copy"><strong>Novi Engineering Club</strong><small>Make things. Make them fly.</small></span>
+        </Link>
+        <nav className="main-nav" aria-label="Main navigation">
+          <Link to="/#projects">Our builds</Link>
+          {projectNames.slice(0, 2).map((projectName) => (
+            <Link key={projectName} to={`/projects/${encodeURIComponent(projectName)}`}>
+              {projectName.charAt(0).toUpperCase() + projectName.slice(1)}
+            </Link>
+          ))}
+          <Link to="/meetings">Meetings</Link>
+          <Link to="/meetings" className="nav-cta">Join the club <span aria-hidden="true">↗</span></Link>
         </nav>
-      </div>
-      <div id="content" className="flex-grow p-4">
-        <Outlet />
-      </div>
+      </header>
+      <div id="content"><Outlet /></div>
+      <footer className="site-footer">
+        <span>© {new Date().getFullYear()} NOVI ENGINEERING CLUB · NOVI, MICHIGAN</span>
+        <span className="footer-social">
+          <a href="https://www.instagram.com/noviengineeringig/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram size={16} /></a>
+          <a href="https://groupme.com/join_group/104854219/05ltImUw" target="_blank" rel="noopener noreferrer" aria-label="GroupMe"><SiGroupme size={15} /></a>
+          <Link to="/admin">Admin</Link>
+        </span>
+      </footer>
     </div>
   );
 }

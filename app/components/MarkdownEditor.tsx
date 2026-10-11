@@ -49,68 +49,68 @@ export default function MarkdownEditor({
   };
 
   return (
-    <div className="flex flex-col gap-4 h-full">
+    <div className="admin-editor flex flex-col gap-4 h-full">
       {/* Toolbar */}
-      <div className="flex gap-2 flex-wrap border-b pb-3">
+      <div className="admin-editor-toolbar flex gap-2 flex-wrap">
         <button
           onClick={() => insertMarkdown("# ")}
-          className="px-3 py-1 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500"
+          className="admin-tool-button"
           title="Heading 1"
         >
           H1
         </button>
         <button
           onClick={() => insertMarkdown("## ")}
-          className="px-3 py-1 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500"
+          className="admin-tool-button"
           title="Heading 2"
         >
           H2
         </button>
         <button
           onClick={() => insertMarkdown("**", "**")}
-          className="px-3 py-1 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500"
+          className="admin-tool-button"
           title="Bold"
         >
           <strong>B</strong>
         </button>
         <button
           onClick={() => insertMarkdown("_", "_")}
-          className="px-3 py-1 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500"
+          className="admin-tool-button"
           title="Italic"
         >
           <em>I</em>
         </button>
         <button
           onClick={() => insertMarkdown("[", "](url)")}
-          className="px-3 py-1 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500"
+          className="admin-tool-button"
           title="Link"
         >
           Link
         </button>
         <button
           onClick={() => insertMarkdown("![alt](", ")")}
-          className="px-3 py-1 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500"
+          className="admin-tool-button"
           title="Image"
         >
           Image
         </button>
         <button
           onClick={() => insertMarkdown("- ")}
-          className="px-3 py-1 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500"
+          className="admin-tool-button"
           title="List"
         >
           List
         </button>
         <button
           onClick={() => insertMarkdown("```\n", "\n```")}
-          className="px-3 py-1 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500"
+          className="admin-tool-button"
           title="Code Block"
         >
           Code
         </button>
         <button
           onClick={() => insertMarkdown("> ")}
-          className="px-3 py-1 bg-gray-300 dark:bg-gray-600 rounded hover:bg-gray-400 dark:hover:bg-gray-500"
+          className="admin-tool-button"
           title="Quote"
         >
           Quote
@@ -119,14 +119,14 @@ export default function MarkdownEditor({
         <div className="ml-auto flex gap-2">
           <button
             onClick={() => setShowPreview(!showPreview)}
-            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="admin-tool-button"
           >
             {showPreview ? "Hide Preview" : "Show Preview"}
           </button>
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="px-4 py-1 bg-green-500 text-white rounded hover:bg-green-600 disabled:bg-green-300"
+            className="admin-tool-button admin-button-primary"
           >
             {isSaving ? "Saving..." : "Save"}
           </button>
@@ -142,7 +142,7 @@ export default function MarkdownEditor({
             ref={editorRef}
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-mono text-sm resize-none"
+            className="admin-textarea"
             placeholder="Enter your markdown content here..."
           />
         </div>
@@ -151,7 +151,7 @@ export default function MarkdownEditor({
         {showPreview && (
           <div className="flex-1 flex flex-col overflow-hidden">
             <label className="text-sm font-semibold mb-2">Preview</label>
-            <div className="flex-1 overflow-auto p-3 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-900 markdown">
+            <div className="admin-preview flex-1 overflow-auto p-3 markdown">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{

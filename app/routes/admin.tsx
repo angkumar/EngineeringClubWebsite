@@ -178,17 +178,17 @@ export default function AdminPanel() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="admin-panel flex">
       {/* Sidebar */}
-      <div className="w-64 bg-white dark:bg-gray-800 border-r border-gray-300 dark:border-gray-700 overflow-y-auto">
-        <div className="p-6">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+      <div className="admin-sidebar overflow-y-auto">
+        <div className="admin-sidebar-inner">
+          <h1 className="admin-title">
             Admin Panel
           </h1>
 
           {/* Projects List */}
           <div className="mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <h2 className="admin-section-label">
               Projects
             </h2>
             <div className="space-y-2">
@@ -199,11 +199,7 @@ export default function AdminPanel() {
                     setSelectedProject(project.name);
                     setShowNewProjectForm(false);
                   }}
-                  className={`w-full text-left px-4 py-2 rounded transition ${
-                    selectedProject === project.name
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600"
-                  }`}
+                  className={`admin-project-button ${selectedProject === project.name ? "is-selected" : ""}`}
                 >
                   {project.name}
                 </button>
@@ -214,7 +210,7 @@ export default function AdminPanel() {
           {/* New Project Button */}
           <button
             onClick={() => setShowNewProjectForm(true)}
-            className="w-full px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition font-semibold"
+            className="admin-new-project"
           >
             + New Project
           </button>
@@ -222,18 +218,18 @@ export default function AdminPanel() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="admin-main flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="bg-white dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 p-6">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <div className="admin-header">
+          <h2 className="admin-page-heading">
             {showNewProjectForm ? "Create New Project" : `Edit: ${selectedProject || "Select a project"}`}
           </h2>
           {notification && (
             <div
-              className={`mt-3 p-3 rounded text-sm ${
+              className={`admin-notification ${
                 notification.type === "success"
-                  ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100"
-                  : "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100"
+                  ? "is-success"
+                  : "is-error"
               }`}
             >
               {notification.message}
@@ -242,16 +238,16 @@ export default function AdminPanel() {
         </div>
 
         {/* Editor Content */}
-        <div className="flex-1 overflow-hidden p-6">
+        <div className="admin-body flex-1 overflow-hidden">
           {showNewProjectForm ? (
             // New Project Form
             <Form
               method="post"
               id="new-project-form"
-              className="flex flex-col gap-4 h-full"
+              className="admin-form flex flex-col gap-4 h-full"
             >
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <label className="admin-label">
                   Project Name
                 </label>
                 <input
@@ -260,9 +256,9 @@ export default function AdminPanel() {
                   value={newProjectName}
                   onChange={(e) => setNewProjectName(e.target.value)}
                   placeholder="e.g., my-awesome-project"
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+                  className="admin-input"
                 />
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                <p className="admin-hint">
                   This will be used as the folder and markdown filename
                 </p>
               </div>
@@ -276,14 +272,14 @@ export default function AdminPanel() {
                     setShowNewProjectForm(false);
                     setNewProjectName("");
                   }}
-                  className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+                  className="admin-button admin-button-secondary"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSaving || !newProjectName.trim()}
-                  className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 disabled:bg-green-300"
+                  className="admin-button admin-button-primary"
                 >
                   {isSaving ? "Creating..." : "Create Project"}
                 </button>
@@ -295,7 +291,7 @@ export default function AdminPanel() {
               method="post"
               key={selectedProject}
               id={`project-form-${selectedProject}`}
-              className="flex flex-col gap-4 h-full"
+              className="admin-form flex flex-col gap-4 h-full"
             >
               <input type="hidden" name="projectName" value={selectedProject || ""} />
               <textarea
@@ -334,7 +330,7 @@ export default function AdminPanel() {
                       document.body.removeChild(deleteForm);
                     }
                   }}
-                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                  className="admin-button admin-button-danger"
                 >
                   Delete Project
                 </button>
@@ -343,15 +339,15 @@ export default function AdminPanel() {
           ) : (
             <div className="flex items-center justify-center h-full text-center">
               <div>
-                <p className="text-xl text-gray-500 dark:text-gray-400 mb-4">
+                <p className="admin-empty-title">
                   No project selected
                 </p>
-                <p className="text-gray-400 dark:text-gray-500 mb-6">
+                <p className="admin-empty-copy">
                   Select a project from the sidebar or create a new one
                 </p>
                 <button
                   onClick={() => setShowNewProjectForm(true)}
-                  className="px-6 py-3 bg-green-500 text-white rounded hover:bg-green-600 font-semibold"
+                  className="admin-button admin-button-primary"
                 >
                   Create Your First Project
                 </button>

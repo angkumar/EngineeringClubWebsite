@@ -84,22 +84,22 @@ export default function Home() {
           <p className="section-aside">We’re learning as we go.<br />These projects are still taking shape.</p>
         </div>
         <div className="project-grid">
-          <article className="project-card">
+          <Link to="/drone" className="project-card project-card-link" aria-label="View the drone project">
             <div className="image-placeholder project-image">
               <span className="placeholder-cross">＋</span><span>DRONE PHOTO</span><small>Frame / electronics / first flight</small>
             </div>
             <div className="project-meta"><span>PROJECT 01</span><span>IN PROGRESS</span></div>
             <h3>The drone</h3>
             <p>Our own frame, flight controls, and a lot of testing. <span className="copy-placeholder">Add a short update from the team.</span></p>
-          </article>
-          <article className="project-card">
+          </Link>
+          <Link to="/rocket" className="project-card project-card-link" aria-label="View the model rocket project">
             <div className="image-placeholder project-image">
               <span className="placeholder-cross">＋</span><span>ROCKET PHOTO</span><small>Sketch / build / launch</small>
             </div>
             <div className="project-meta"><span>PROJECT 02</span><span>IN PROGRESS</span></div>
             <h3>The model rocket</h3>
             <p>A student-built rocket, from the first sketch to launch day. <span className="copy-placeholder">Add a short update from the team.</span></p>
-          </article>
+          </Link>
         </div>
       </section>
 

@@ -1,15 +1,15 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { PassThrough } from "node:stream";
 import { createReadableStreamFromReadable } from "@react-router/node";
-import { ServerRouter, UNSAFE_withComponentProps, useLoaderData, Link, Outlet, UNSAFE_withErrorBoundaryProps, isRouteErrorResponse, Meta, Links, ScrollRestoration, Scripts, useNavigation, Form } from "react-router";
+import { ServerRouter, UNSAFE_withComponentProps, Link, Outlet, UNSAFE_withErrorBoundaryProps, isRouteErrorResponse, Meta, Links, ScrollRestoration, Scripts, useLoaderData, useNavigation, Form } from "react-router";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
-import fs, { readdir } from "node:fs/promises";
 import { FaInstagram } from "react-icons/fa";
 import { SiGroupme } from "react-icons/si";
 import { useState, useEffect, useCallback, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import fs from "node:fs/promises";
 import path from "node:path";
 const streamTimeout = 5e3;
 function handleRequest(request, responseStatusCode, responseHeaders, routerContext, loadContext) {
@@ -61,28 +61,6 @@ const entryServer = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
   default: handleRequest,
   streamTimeout
 }, Symbol.toStringTag, { value: "Module" }));
-async function loader$3() {
-  let projectNames = [];
-  if (typeof window === "undefined") {
-    try {
-      const projectsPath = "./app/routes/projects";
-      const projectDirs = await readdir(projectsPath, {
-        withFileTypes: true
-      });
-      projectNames = projectDirs.filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
-    } catch (error) {
-      console.error("Failed to read project directories:", error);
-      projectNames = [];
-    }
-  }
-  return new Response(JSON.stringify({
-    projectNames
-  }), {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-}
 function Layout({
   children
 }) {
@@ -101,9 +79,6 @@ function Layout({
   });
 }
 const root = UNSAFE_withComponentProps(function App() {
-  const {
-    projectNames
-  } = useLoaderData();
   return /* @__PURE__ */ jsxs("div", {
     className: "site-shell",
     children: [/* @__PURE__ */ jsxs("header", {
@@ -129,10 +104,16 @@ const root = UNSAFE_withComponentProps(function App() {
         children: [/* @__PURE__ */ jsx(Link, {
           to: "/#projects",
           children: "Our builds"
-        }), projectNames.slice(0, 2).map((projectName) => /* @__PURE__ */ jsx(Link, {
-          to: `/projects/${encodeURIComponent(projectName)}`,
-          children: projectName.charAt(0).toUpperCase() + projectName.slice(1)
-        }, projectName)), /* @__PURE__ */ jsx(Link, {
+        }), /* @__PURE__ */ jsx(Link, {
+          to: "/drone",
+          children: "Drone"
+        }), /* @__PURE__ */ jsx(Link, {
+          to: "/rocket",
+          children: "Model rocket"
+        }), /* @__PURE__ */ jsx(Link, {
+          to: "/sponsors",
+          children: "Sponsors"
+        }), /* @__PURE__ */ jsx(Link, {
           to: "/meetings",
           children: "Meetings"
         }), /* @__PURE__ */ jsxs(Link, {
@@ -200,8 +181,7 @@ const route0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   __proto__: null,
   ErrorBoundary,
   Layout,
-  default: root,
-  loader: loader$3
+  default: root
 }, Symbol.toStringTag, { value: "Module" }));
 const useIsStaticRenderer = () => false;
 const DEFAULT_SLIDES = [
@@ -1320,7 +1300,7 @@ const __originkitPresetProps = {
 function VectorWordmark(props) {
   return /* @__PURE__ */ jsx(__OriginkitBase_VectorWordmark, { ...__originkitPresetProps, ...props });
 }
-function meta$2({}) {
+function meta$5({}) {
   return [{
     title: "Novi Engineering Club"
   }, {
@@ -1477,8 +1457,10 @@ const home = UNSAFE_withComponentProps(function Home() {
         })]
       }), /* @__PURE__ */ jsxs("div", {
         className: "project-grid",
-        children: [/* @__PURE__ */ jsxs("article", {
-          className: "project-card",
+        children: [/* @__PURE__ */ jsxs(Link, {
+          to: "/drone",
+          className: "project-card project-card-link",
+          "aria-label": "View the drone project",
           children: [/* @__PURE__ */ jsxs("div", {
             className: "image-placeholder project-image",
             children: [/* @__PURE__ */ jsx("span", {
@@ -1504,8 +1486,10 @@ const home = UNSAFE_withComponentProps(function Home() {
               children: "Add a short update from the team."
             })]
           })]
-        }), /* @__PURE__ */ jsxs("article", {
-          className: "project-card",
+        }), /* @__PURE__ */ jsxs(Link, {
+          to: "/rocket",
+          className: "project-card project-card-link",
+          "aria-label": "View the model rocket project",
           children: [/* @__PURE__ */ jsxs("div", {
             className: "image-placeholder project-image",
             children: [/* @__PURE__ */ jsx("span", {
@@ -1581,6 +1565,165 @@ const home = UNSAFE_withComponentProps(function Home() {
 const route1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: home,
+  meta: meta$5
+}, Symbol.toStringTag, { value: "Module" }));
+function meta$4({}) {
+  return [{
+    title: "Drone Project | Novi Engineering Club"
+  }, {
+    name: "description",
+    content: "Follow the Novi Engineering Club's student-built drone project."
+  }];
+}
+const drone = UNSAFE_withComponentProps(function DronePage() {
+  return /* @__PURE__ */ jsxs("main", {
+    className: "detail-page section-wrap",
+    children: [/* @__PURE__ */ jsxs("section", {
+      className: "detail-copy",
+      children: [/* @__PURE__ */ jsx("p", {
+        className: "eyebrow",
+        children: "PROJECT 01 · IN PROGRESS"
+      }), /* @__PURE__ */ jsx("h1", {
+        children: "The drone."
+      }), /* @__PURE__ */ jsx("p", {
+        className: "detail-lede",
+        children: "Designed and built by Novi students, from the frame up."
+      }), /* @__PURE__ */ jsx("p", {
+        children: "We’re working through the design, electronics, and flight controls together. The goal is to understand every part of the build and learn through testing."
+      }), /* @__PURE__ */ jsxs("div", {
+        className: "detail-notes",
+        children: [/* @__PURE__ */ jsx("p", {
+          className: "eyebrow",
+          children: "PROJECT NOTES"
+        }), /* @__PURE__ */ jsx("p", {
+          className: "detail-placeholder",
+          children: "Add the current design, what the team is testing, and what you want to try next."
+        })]
+      }), /* @__PURE__ */ jsx(Link, {
+        to: "/#projects",
+        className: "detail-back",
+        children: "← Back to all projects"
+      })]
+    }), /* @__PURE__ */ jsxs("div", {
+      className: "image-placeholder detail-image",
+      role: "img",
+      "aria-label": "Placeholder for a photo of the drone project",
+      children: [/* @__PURE__ */ jsx("span", {
+        className: "placeholder-cross",
+        children: "＋"
+      }), /* @__PURE__ */ jsx("span", {
+        children: "DRONE PHOTO"
+      }), /* @__PURE__ */ jsx("small", {
+        children: "Add a photo of the frame, electronics, or first flight"
+      })]
+    })]
+  });
+});
+const route2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: drone,
+  meta: meta$4
+}, Symbol.toStringTag, { value: "Module" }));
+function meta$3({}) {
+  return [{
+    title: "Model Rocket Project | Novi Engineering Club"
+  }, {
+    name: "description",
+    content: "Follow the Novi Engineering Club's student-built model rocket project."
+  }];
+}
+const rocket = UNSAFE_withComponentProps(function RocketPage() {
+  return /* @__PURE__ */ jsxs("main", {
+    className: "detail-page section-wrap",
+    children: [/* @__PURE__ */ jsxs("section", {
+      className: "detail-copy",
+      children: [/* @__PURE__ */ jsx("p", {
+        className: "eyebrow",
+        children: "PROJECT 02 · IN PROGRESS"
+      }), /* @__PURE__ */ jsx("h1", {
+        children: "The model rocket."
+      }), /* @__PURE__ */ jsx("p", {
+        className: "detail-lede",
+        children: "A student-built rocket, from the first sketch to launch day."
+      }), /* @__PURE__ */ jsx("p", {
+        children: "We’re learning about stability, structure, and how each part of a rocket works. The project will take shape through careful design, building, and testing."
+      }), /* @__PURE__ */ jsxs("div", {
+        className: "detail-notes",
+        children: [/* @__PURE__ */ jsx("p", {
+          className: "eyebrow",
+          children: "PROJECT NOTES"
+        }), /* @__PURE__ */ jsx("p", {
+          className: "detail-placeholder",
+          children: "Add the current design, the next build milestone, and launch updates here."
+        })]
+      }), /* @__PURE__ */ jsx(Link, {
+        to: "/#projects",
+        className: "detail-back",
+        children: "← Back to all projects"
+      })]
+    }), /* @__PURE__ */ jsxs("div", {
+      className: "image-placeholder detail-image",
+      role: "img",
+      "aria-label": "Placeholder for a photo of the model rocket project",
+      children: [/* @__PURE__ */ jsx("span", {
+        className: "placeholder-cross",
+        children: "＋"
+      }), /* @__PURE__ */ jsx("span", {
+        children: "MODEL ROCKET PHOTO"
+      }), /* @__PURE__ */ jsx("small", {
+        children: "Add a sketch, build photo, or launch image"
+      })]
+    })]
+  });
+});
+const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: rocket,
+  meta: meta$3
+}, Symbol.toStringTag, { value: "Module" }));
+function meta$2({}) {
+  return [{
+    title: "Sponsors | Novi Engineering Club"
+  }, {
+    name: "description",
+    content: "Meet the people and organizations supporting Novi Engineering Club."
+  }];
+}
+const sponsors = ["SPONSOR LOGO", "COMMUNITY PARTNER", "SCHOOL PARTNER", "ADD A SUPPORTER"];
+const sponsors_default = UNSAFE_withComponentProps(function SponsorsPage() {
+  return /* @__PURE__ */ jsxs("main", {
+    className: "sponsors-page section-wrap",
+    children: [/* @__PURE__ */ jsxs("header", {
+      className: "sponsors-heading",
+      children: [/* @__PURE__ */ jsx("p", {
+        className: "eyebrow",
+        children: "NOVI ENGINEERING CLUB"
+      }), /* @__PURE__ */ jsxs("h1", {
+        children: ["Made possible", /* @__PURE__ */ jsx("br", {}), "together."]
+      }), /* @__PURE__ */ jsx("p", {
+        children: "We’re grateful to the people and organizations who help students turn ideas into real projects."
+      })]
+    }), /* @__PURE__ */ jsx("section", {
+      className: "sponsor-grid",
+      "aria-label": "Club sponsors and partners",
+      children: sponsors.map((sponsor) => /* @__PURE__ */ jsxs("div", {
+        className: "sponsor-card",
+        children: [/* @__PURE__ */ jsx("span", {
+          className: "sponsor-logo-placeholder",
+          children: "＋"
+        }), /* @__PURE__ */ jsx("span", {
+          children: sponsor
+        })]
+      }, sponsor))
+    }), /* @__PURE__ */ jsx("p", {
+      className: "sponsor-thanks",
+      children: "Add sponsor names, logos, and a short thank-you here."
+    })]
+  });
+});
+const route4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: sponsors_default,
   meta: meta$2
 }, Symbol.toStringTag, { value: "Module" }));
 function MeetingWidget({ date, topic, minutesLink }) {
@@ -1665,7 +1808,7 @@ const meetings = UNSAFE_withComponentProps(function Meetings() {
     })]
   });
 });
-const route2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: meetings,
   meta: meta$1
@@ -2137,7 +2280,7 @@ const admin = UNSAFE_withComponentProps(function AdminPanel() {
     })]
   });
 });
-const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   action,
   default: admin,
@@ -2206,7 +2349,7 @@ const projects_$projectName = UNSAFE_withComponentProps(function ProjectPage() {
     })
   });
 });
-const route4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: projects_$projectName,
   loader: loader$1,
@@ -2256,11 +2399,11 @@ function getImageContentType(imageName) {
       return "application/octet-stream";
   }
 }
-const route5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const route8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   loader
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-B0he7NFv.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-Dsy7R5_7.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js"], "css": ["/assets/root-Dw8JU1kd.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/home-BYf1JGdk.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/meetings": { "id": "routes/meetings", "parentId": "root", "path": "meetings", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/meetings-C17HmvIz.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/admin": { "id": "routes/admin", "parentId": "root", "path": "admin", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/admin-BvtnN8do.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js", "/assets/index-BLlCpfXk.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/projects.$projectName": { "id": "routes/projects.$projectName", "parentId": "root", "path": "projects/:projectName", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/projects._projectName-Bx74kznX.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js", "/assets/index-BLlCpfXk.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/projects.$projectName.image.$imageName": { "id": "routes/projects.$projectName.image.$imageName", "parentId": "root", "path": "projects/:projectName/image/:imageName", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/projects._projectName.image._imageName-l0sNRNKZ.js", "imports": [], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-0d964f69.js", "version": "0d964f69", "sri": void 0 };
+const serverManifest = { "entry": { "module": "/assets/entry.client-B0he7NFv.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-Dyl4hQhz.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js"], "css": ["/assets/root-C5lyDaR0.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/home-DAbXvUGc.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/drone": { "id": "routes/drone", "parentId": "root", "path": "drone", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/drone-CAvrrNyJ.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/rocket": { "id": "routes/rocket", "parentId": "root", "path": "rocket", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/rocket-D0j-AOfV.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/sponsors": { "id": "routes/sponsors", "parentId": "root", "path": "sponsors", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/sponsors-B02mBFtq.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/meetings": { "id": "routes/meetings", "parentId": "root", "path": "meetings", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/meetings-C17HmvIz.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/admin": { "id": "routes/admin", "parentId": "root", "path": "admin", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/admin-BvtnN8do.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js", "/assets/index-BLlCpfXk.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/projects.$projectName": { "id": "routes/projects.$projectName", "parentId": "root", "path": "projects/:projectName", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/projects._projectName-Bx74kznX.js", "imports": ["/assets/chunk-UIGDSWPH-DOTS8KH7.js", "/assets/index-BLlCpfXk.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/projects.$projectName.image.$imageName": { "id": "routes/projects.$projectName.image.$imageName", "parentId": "root", "path": "projects/:projectName/image/:imageName", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/projects._projectName.image._imageName-l0sNRNKZ.js", "imports": [], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-44314d9e.js", "version": "44314d9e", "sri": void 0 };
 const assetsBuildDirectory = "build/client";
 const basename = "/";
 const future = { "v8_middleware": false, "unstable_optimizeDeps": false, "unstable_splitRouteModules": false, "unstable_subResourceIntegrity": false, "unstable_viteEnvironmentApi": false };
@@ -2287,13 +2430,37 @@ const routes = {
     caseSensitive: void 0,
     module: route1
   },
+  "routes/drone": {
+    id: "routes/drone",
+    parentId: "root",
+    path: "drone",
+    index: void 0,
+    caseSensitive: void 0,
+    module: route2
+  },
+  "routes/rocket": {
+    id: "routes/rocket",
+    parentId: "root",
+    path: "rocket",
+    index: void 0,
+    caseSensitive: void 0,
+    module: route3
+  },
+  "routes/sponsors": {
+    id: "routes/sponsors",
+    parentId: "root",
+    path: "sponsors",
+    index: void 0,
+    caseSensitive: void 0,
+    module: route4
+  },
   "routes/meetings": {
     id: "routes/meetings",
     parentId: "root",
     path: "meetings",
     index: void 0,
     caseSensitive: void 0,
-    module: route2
+    module: route5
   },
   "routes/admin": {
     id: "routes/admin",
@@ -2301,7 +2468,7 @@ const routes = {
     path: "admin",
     index: void 0,
     caseSensitive: void 0,
-    module: route3
+    module: route6
   },
   "routes/projects.$projectName": {
     id: "routes/projects.$projectName",
@@ -2309,7 +2476,7 @@ const routes = {
     path: "projects/:projectName",
     index: void 0,
     caseSensitive: void 0,
-    module: route4
+    module: route7
   },
   "routes/projects.$projectName.image.$imageName": {
     id: "routes/projects.$projectName.image.$imageName",
@@ -2317,7 +2484,7 @@ const routes = {
     path: "projects/:projectName/image/:imageName",
     index: void 0,
     caseSensitive: void 0,
-    module: route5
+    module: route8
   }
 };
 export {

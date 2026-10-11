@@ -6,41 +6,13 @@ import {
   Scripts,
   ScrollRestoration,
   Link,
-  useLoaderData,
 } from "react-router";
-
-import { readdir } from "node:fs/promises";
 
 
 import { FaInstagram } from "react-icons/fa";
 import { SiGroupme } from "react-icons/si";
 
 import type { Route } from "./+types/root";
-
-export async function loader() {
-  let projectNames: string[] = [];
-  if (typeof window === "undefined") { // Check if running on the server
-    try {
-      const projectsPath = "./app/routes/projects";
-      const projectDirs = await readdir(projectsPath, { withFileTypes: true });
-      projectNames = projectDirs
-        .filter((dirent) => dirent.isDirectory())
-        .map((dirent) => dirent.name);
-    } catch (error) {
-      console.error("Failed to read project directories:", error);
-      // Fallback to empty array if readdir fails
-      projectNames = [];
-    }
-  }
-  return new Response(JSON.stringify({ projectNames }), {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-}
-interface LoaderData {
-  projectNames: string[];
-}
 
 import "./app.css";
 import "./mdx.css";
@@ -65,8 +37,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const { projectNames } = useLoaderData<LoaderData>();
-
   return (
     <div className="site-shell">
       <header className="site-header">
@@ -76,11 +46,9 @@ export default function App() {
         </Link>
         <nav className="main-nav" aria-label="Main navigation">
           <Link to="/#projects">Our builds</Link>
-          {projectNames.slice(0, 2).map((projectName) => (
-            <Link key={projectName} to={`/projects/${encodeURIComponent(projectName)}`}>
-              {projectName.charAt(0).toUpperCase() + projectName.slice(1)}
-            </Link>
-          ))}
+          <Link to="/drone">Drone</Link>
+          <Link to="/rocket">Model rocket</Link>
+          <Link to="/sponsors">Sponsors</Link>
           <Link to="/meetings">Meetings</Link>
           <Link to="/meetings" className="nav-cta">Join the club <span aria-hidden="true">↗</span></Link>
         </nav>

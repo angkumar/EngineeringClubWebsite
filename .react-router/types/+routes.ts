@@ -14,6 +14,15 @@ type Pages = {
   "/": {
     params: {};
   };
+  "/drone": {
+    params: {};
+  };
+  "/rocket": {
+    params: {};
+  };
+  "/sponsors": {
+    params: {};
+  };
   "/meetings": {
     params: {};
   };
@@ -36,11 +45,23 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/meetings" | "/admin" | "/projects/:projectName" | "/projects/:projectName/image/:imageName";
+    page: "/" | "/drone" | "/rocket" | "/sponsors" | "/meetings" | "/admin" | "/projects/:projectName" | "/projects/:projectName/image/:imageName";
   };
   "routes/home.tsx": {
     id: "routes/home";
     page: "/";
+  };
+  "routes/drone.tsx": {
+    id: "routes/drone";
+    page: "/drone";
+  };
+  "routes/rocket.tsx": {
+    id: "routes/rocket";
+    page: "/rocket";
+  };
+  "routes/sponsors.tsx": {
+    id: "routes/sponsors";
+    page: "/sponsors";
   };
   "routes/meetings.tsx": {
     id: "routes/meetings";
@@ -63,6 +84,9 @@ type RouteFiles = {
 type RouteModules = {
   "root": typeof import("./app/root.tsx");
   "routes/home": typeof import("./app/routes/home.tsx");
+  "routes/drone": typeof import("./app/routes/drone.tsx");
+  "routes/rocket": typeof import("./app/routes/rocket.tsx");
+  "routes/sponsors": typeof import("./app/routes/sponsors.tsx");
   "routes/meetings": typeof import("./app/routes/meetings.tsx");
   "routes/admin": typeof import("./app/routes/admin.tsx");
   "routes/projects.$projectName": typeof import("./app/routes/projects.$projectName.tsx");

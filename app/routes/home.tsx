@@ -48,7 +48,7 @@ export default function Home() {
             />
           </div>
         </div>
-        <p className="hero-intro">A few Novi students, a lot of curiosity, and two things we’re building from scratch: a drone and a model rocket.</p>
+        
         <div className="hero-actions">
           <Link to="/#projects" className="button button-light">See what we’re building <span aria-hidden="true">↓</span></Link>
           <Link to="/meetings" className="text-link">Come by a meeting <span aria-hidden="true">↗</span></Link>
@@ -80,8 +80,8 @@ export default function Home() {
 
       <section className="projects-section section-wrap" id="projects">
         <div className="section-heading">
-          <div><p className="eyebrow">WHAT WE’RE WORKING ON</p><h2>Built from<br />the ground up.</h2></div>
-          <p className="section-aside">We’re learning as we go.<br />These projects are still taking shape.</p>
+          <div><p className="eyebrow">WHAT WE’RE WORKING ON</p><h2>Our Projects:</h2></div>
+          
         </div>
         <div className="project-grid">
           <Link to="/drone" className="project-card project-card-link" aria-label="View the drone project">
@@ -89,7 +89,7 @@ export default function Home() {
               <span className="placeholder-cross">＋</span><span>DRONE PHOTO</span><small>Frame / electronics / first flight</small>
             </div>
             <div className="project-meta"><span>PROJECT 01</span><span>IN PROGRESS</span></div>
-            <h3>The drone</h3>
+            <h3>Drone</h3>
             <p>Our own frame, flight controls, and a lot of testing. <span className="copy-placeholder">Add a short update from the team.</span></p>
           </Link>
           <Link to="/rocket" className="project-card project-card-link" aria-label="View the model rocket project">
